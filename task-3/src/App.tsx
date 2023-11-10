@@ -1,16 +1,30 @@
-import { useState } from 'react'
-import './App.css'
+import {
+  ThemeProvider,
+  CssBaseline,
+  createTheme,
+  Container,
+  Box,
+  Button,
+  Switch,
+  FormControlLabel,
+} from '@mui/material';
+import Header from './components/Header';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div>
-      <button onClick={() => setCount((count) => count + 1)}>
-        count is {count}
-      </button>
-    </div>
-  )
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Container disableGutters={true} sx={{ height: '100vh', width: '100%' }}>
+        <Header />
+      </Container>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
