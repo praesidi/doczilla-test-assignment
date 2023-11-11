@@ -15,6 +15,8 @@ function AddStudentForm() {
 
       <label htmlFor='birthday'>Дата рождения</label>
       <input type='date' id='birthday' />
+
+      <button type='submit'>Добавить</button>
     </form>
   );
 }
