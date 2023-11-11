@@ -14,17 +14,7 @@
   flex: 1;
 }
 
-.modal-underlay {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(136, 136, 136, 0.5);
-}
-
-.modal-container {
+.content-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -35,13 +25,13 @@
   min-width: 320px;
 }
 
-.modal-close-btn-wrapper {
+.content-close-btn-wrapper {
   width: 100%;
   display: flex;
   justify-content: end;
 }
 
-.modal-form-wrapper {
+.content-form-wrapper {
 }
 
 .add-student-form,

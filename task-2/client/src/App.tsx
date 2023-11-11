@@ -1,22 +1,44 @@
 import { useState } from 'react';
-import Modal from './components/Modal';
 import './assets/styles/style.css';
+import Content from './components/Content';
+
+export interface IStudent {
+  firstName: string;
+  lastName: string;
+  fatherName?: string;
+  group: string;
+  birthday: Date;
+}
+
+export type IOperation = 'add' | 'delete' | 'show all' | undefined;
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [operation, setOperation] = useState<'add' | 'delete' | undefined>();
+  const [isContentShown, setIsContentShown] = useState(false);
+  // TODO: check if that is a correct way to work with the modal
+  const [operation, setOperation] = useState<IOperation>();
+  const [data] = useState<IStudent[]>([
+    {
+      firstName: 'el',
+      lastName: 'kheel',
+      group: 'ist-171',
+      birthday: new Date('1999-09-07'),
+    },
+  ]);
 
   function handleAddStudent() {
     setOperation('add');
-    setIsModalOpen(true);
+    setIsContentShown(true);
   }
 
   function handleDeleteStudent() {
     setOperation('delete');
-    setIsModalOpen(true);
+    setIsContentShown(true);
   }
 
-  function handleShowAllStudents() {}
+  function handleShowAllStudents() {
+    setOperation('show all');
+    setIsContentShown(true);
+  }
 
   return (
     <div className='container'>
@@ -32,12 +54,17 @@ function App() {
             Вывести список всех студентов
           </button>
         </div>
+        <br />
+        {isContentShown ? (
+          <Content
+            operation={operation}
+            data={data}
+            onClose={() => setIsContentShown(false)}
+          />
+        ) : (
+          <></>
+        )}
       </main>
-      {isModalOpen ? (
-        <Modal operation={operation} onClose={() => setIsModalOpen(false)} />
-      ) : (
-        <></>
-      )}
     </div>
   );
 }
