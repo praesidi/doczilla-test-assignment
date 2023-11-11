@@ -31,9 +31,6 @@
   justify-content: end;
 }
 
-.content-form-wrapper {
-}
-
 .add-student-form,
 .delete-student-form {
   display: flex;
@@ -48,6 +45,31 @@
 
 .add-student-form input,
 .delete-student-form input {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   padding: 5px 10px;
+}
+
+.students-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.student-card {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  background: rgba(85, 85, 85, 0.7);
+  padding: 10px 20px;
+}
+
+.student-card span {
+  display: block;
+}
+
+.name {
+  text-transform: capitalize;
+  font-weight: 500;
 }
