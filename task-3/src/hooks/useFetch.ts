@@ -6,12 +6,19 @@ export default function useFetch(searchQuery: string) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const url = '/api/todos';
+
   useEffect(() => {
+    console.log('data is fetching');
     setIsLoading(true);
     async function getTasks() {
       try {
-        const response = await fetch(url);
-        console.log(response);
+        let response;
+        if (searchQuery !== '' && searchQuery !== ' ') {
+          response = await fetch(`${url}/find?q=${searchQuery}`);
+        } else {
+          response = await fetch(url);
+        }
         const data = await response.json();
         setData(data);
         setIsLoading(false);
@@ -20,13 +27,12 @@ export default function useFetch(searchQuery: string) {
         if (error instanceof Error) {
           errorMessage = error.message;
           setError(errorMessage);
-          setIsLoading(false);
         }
         console.log(errorMessage);
       }
     }
     getTasks();
-  }, [url]);
+  }, [url, searchQuery]);
 
   return { data, isLoading, error };
 }
