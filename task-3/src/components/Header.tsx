@@ -3,16 +3,12 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
+  width: '100%',
+  marginLeft: 0,
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
   },
 }));
 
@@ -28,24 +24,23 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
+  width: '100%',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
   },
 }));
 
-function Header() {
+function Header({
+  onSearch,
+}: {
+  onSearch: React.Dispatch<React.SetStateAction<string>>;
+}) {
   return (
-    <AppBar position='static'>
+    <AppBar position='sticky'>
       <Toolbar>
         <Search>
           <SearchIconWrapper>
@@ -53,6 +48,10 @@ function Header() {
           </SearchIconWrapper>
           <StyledInputBase
             placeholder='Search…'
+            onChange={(e) => {
+              const searchQuery = e.target.value;
+              onSearch(searchQuery);
+            }}
             inputProps={{ 'aria-label': 'search' }}
           />
         </Search>
