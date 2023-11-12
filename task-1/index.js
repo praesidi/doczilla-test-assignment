@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// TODO: try to get rid of the variable
 const fileNamesList = {};
 
 function getAllTextFileNames(directory) {
