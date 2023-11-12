@@ -15,8 +15,6 @@ function Sidebar({
   onThisWeek: () => void;
   date: Dayjs;
 }) {
-  // const [day, setDay] = useState(dayjs(new Date()))
-
   function onDateChange() {}
 
   return (
