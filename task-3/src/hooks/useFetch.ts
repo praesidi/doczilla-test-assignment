@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react';
+import { ITask } from '../types';
 
-export interface ITask {
-  id: string;
-  name: string;
-  shortDesc: string;
-  fullDesc: string;
-  date: string;
-  status: boolean;
-}
-
-export default function useFetch(url: string) {
+export default function useFetch(searchQuery: string) {
   const [data, setData] = useState<ITask[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
