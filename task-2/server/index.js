@@ -1,7 +1,10 @@
 import express from "express";
 import mysql from "mysql";
+import cors from "cors";
 
 const app = express();
+app.use(express.json());
+app.use(cors());
 
 const db = mysql.createConnection({
 	host: "localhost",
@@ -11,10 +14,8 @@ const db = mysql.createConnection({
 	timezone: "+00:00",
 });
 
-app.use(express.json());
-
 app.get("/", (req, res) => {
-	res.json("hello from the backend");
+	res.json("backend works as it should");
 });
 
 app.get("/students", (req, res) => {
@@ -27,21 +28,32 @@ app.get("/students", (req, res) => {
 
 app.post("/students", (req, res) => {
 	const q =
-		"INSERT INTO students (`first_name`,`last_name`,`father_name`,`group`,`birthday`) VALUES (?)";
+		"INSERT INTO students (`firstName`,`lastName`,`fatherName`,`group`,`birthday`) VALUES (?)";
+
 	const values = [
-		req.body.first_name,
-		req.body.last_name,
-		req.body.father_name,
+		req.body.firstName,
+		req.body.lastName,
+		req.body.fatherName,
 		req.body.group,
 		req.body.birthday,
 	];
 
 	db.query(q, [values], (err, data) => {
 		if (err) return res.json(err);
-		return res.json("student has been added");
+		return res.json(data);
+	});
+});
+
+app.delete("/students/:id", (req, res) => {
+	const studentId = req.params.id;
+	const q = "DELETE FROM students WHERE id = ? ";
+
+	db.query(q, [studentId], (err, data) => {
+		if (err) return res.json(err);
+		return res.json(err);
 	});
 });
 
 app.listen(8800, () => {
-	console.log("server is alive:)!");
+	console.log("server is working");
 });
