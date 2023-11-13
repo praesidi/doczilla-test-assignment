@@ -21,7 +21,6 @@ function TaskList({
   onSortByDate: (arg0: string) => void;
   onShowAll: () => void;
   handleTaskCardClick: (arg0: ITask) => void;
-  // onSortByDate: Dispatch<SetStateAction<ISortByDateOption>>;
 }) {
   return (
     <Box sx={{ px: '20px', flex: 1 }}>

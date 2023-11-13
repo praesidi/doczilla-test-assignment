@@ -9,7 +9,6 @@ export default function useFetch(parameters: string) {
   const url = '/api/todos';
 
   useEffect(() => {
-    console.log('data is fetching');
     setIsLoading(true);
     async function getTasks() {
       try {

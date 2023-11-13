@@ -30,7 +30,7 @@ function Sidebar({
       }}
     >
       <Button fullWidth variant='outlined' onClick={onToday}>
-        Сегодня
+        На сегодня
       </Button>
       <Button fullWidth variant='outlined' onClick={onThisWeek}>
         На неделю
