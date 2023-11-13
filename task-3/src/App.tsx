@@ -116,8 +116,6 @@ function App() {
       today
     ).getTime()}`;
 
-    console.log(query);
-
     setAPIParameters(query);
   }
 
@@ -146,7 +144,6 @@ function App() {
       toDate
     ).getTime()}`;
 
-    console.log(query);
     setAPIParameters(query);
   }
 
@@ -162,7 +159,7 @@ function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Container disableGutters={true} sx={{ height: '100vh', width: '100%' }}>
-        <Header onSearch={setAPIParameters} />
+        <Header onClick={handleTaskCardClick} />
         <Container disableGutters sx={{ display: 'flex', py: '30px' }}>
           <Sidebar
             areUnfinishedShown={areUnfinishedShown}
@@ -190,7 +187,6 @@ function App() {
                 tasks={currentData}
                 sortOption={currentSortOption}
                 onSortByDate={handleSortByDate}
-                // onSortByDate={handleSortedData}
                 onShowAll={handleShowAll}
                 handleTaskCardClick={handleTaskCardClick}
               />

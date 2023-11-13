@@ -1,5 +1,8 @@
 import { AppBar, Toolbar, styled, alpha, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import SearchResultsList from './SearchResultsList';
+import { useEffect, useState } from 'react';
+import { ITask } from '../types';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -34,13 +37,48 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function Header({
-  onSearch,
-}: {
-  onSearch: React.Dispatch<React.SetStateAction<string>>;
-}) {
+function Header({ onClick }: { onClick: (arg0: ITask) => void }) {
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchResult, setSearchResult] = useState<ITask[] | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (searchQuery !== '') {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+
+    fetchDataByQuery(searchQuery);
+  }, [searchQuery]);
+
+  function fetchDataByQuery(query: string) {
+    const limit = 10;
+    const url = `/api/todos/find?q=${query}&limit=${limit}`;
+
+    async function getData() {
+      try {
+        let response;
+        if (query === '' || query === ' ') {
+          return;
+        } else {
+          response = await fetch(url);
+        }
+        const data = await response.json();
+        setSearchResult(data);
+      } catch (error) {
+        let errorMessage = 'Failed to fetch data from the server';
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        }
+        console.log(errorMessage);
+      }
+    }
+    getData();
+  }
+
   return (
-    <AppBar position='sticky'>
+    <AppBar position='sticky' sx={{ position: 'relative' }}>
       <Toolbar>
         <Search>
           <SearchIconWrapper>
@@ -49,12 +87,16 @@ function Header({
           <StyledInputBase
             placeholder='Search…'
             onChange={(e) => {
-              const searchQuery = e.target.value;
-              onSearch(`/find?q=${searchQuery}`);
+              setSearchQuery(e.target.value);
             }}
             inputProps={{ 'aria-label': 'search' }}
           />
         </Search>
+        {isOpen ? (
+          <SearchResultsList items={searchResult} onClick={onClick} />
+        ) : (
+          <></>
+        )}
       </Toolbar>
     </AppBar>
   );
