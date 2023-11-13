@@ -1,20 +1,34 @@
-function AddStudentForm() {
+import { FormEvent } from 'react';
+
+function AddStudentForm({
+  onSubmit,
+  resetForm,
+}: {
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  resetForm: (e: FormEvent<HTMLFormElement>) => void;
+}) {
   return (
-    <form action='' className='add-student-form'>
-      <label htmlFor='first_name'>Имя</label>
-      <input type='text' id='first_name' />
+    <form
+      onSubmit={(e: FormEvent<HTMLFormElement>) => {
+        onSubmit(e);
+        resetForm(e);
+      }}
+      className='add-student-form'
+    >
+      <label htmlFor='firstName'>Имя*</label>
+      <input type='text' id='firstName' name='firstName' required />
 
-      <label htmlFor='last_name'>Фамилия</label>
-      <input type='text' id='last_name' />
+      <label htmlFor='lastName'>Фамилия*</label>
+      <input type='text' id='lastName' name='lastName' required />
 
-      <label htmlFor='father_name'>Отчество</label>
-      <input type='text' id='father_name' />
+      <label htmlFor='fatherName'>Отчество</label>
+      <input type='text' id='fatherName' name='fatherName' />
 
-      <label htmlFor='group'>Группа</label>
-      <input type='text' id='group' />
+      <label htmlFor='group'>Группа*</label>
+      <input type='text' id='group' name='group' required />
 
-      <label htmlFor='birthday'>Дата рождения</label>
-      <input type='date' id='birthday' />
+      <label htmlFor='birthday'>Дата рождения*</label>
+      <input type='date' id='birthday' name='birthday' required />
 
       <button type='submit'>Добавить</button>
     </form>

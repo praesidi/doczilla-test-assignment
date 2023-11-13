@@ -1,9 +1,23 @@
-function DeleteStudentForm() {
+import { FormEvent } from 'react';
+
+function DeleteStudentForm({
+  onDelete,
+  resetForm,
+}: {
+  onDelete: (e: FormEvent<HTMLFormElement>) => void;
+  resetForm: (e: FormEvent<HTMLFormElement>) => void;
+}) {
   return (
-    <form action='' className='delete-student-form'>
-      <label htmlFor='student_id'>Введите id студента</label>
-      <input type='text' id='student_id' />
-      <button>Удалить</button>
+    <form
+      className='delete-student-form'
+      onSubmit={(e: FormEvent<HTMLFormElement>) => {
+        onDelete(e);
+        resetForm(e);
+      }}
+    >
+      <label htmlFor='studentID'>Введите id студента</label>
+      <input type='text' id='studentID' />
+      <button type='submit'>Удалить</button>
     </form>
   );
 }
