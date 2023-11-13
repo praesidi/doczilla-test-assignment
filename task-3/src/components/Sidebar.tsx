@@ -1,22 +1,22 @@
 import { Box, Button, FormControlLabel, Switch } from '@mui/material';
-import { DateCalendar } from '@mui/x-date-pickers';
-import { Dayjs } from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers';
+import { IDate, IDateRange } from '../types';
 
 function Sidebar({
-  isShowUnfinished,
+  areUnfinishedShown,
   onToggle,
   onToday,
   onThisWeek,
-  date,
+  onDateRange,
+  dateRange,
 }: {
-  isShowUnfinished: boolean;
+  areUnfinishedShown: boolean;
   onToggle: () => void;
   onToday: () => void;
   onThisWeek: () => void;
-  date: Dayjs;
+  dateRange: IDateRange;
+  onDateRange: (arg0: IDateRange) => void;
 }) {
-  function onDateChange() {}
-
   return (
     <Box
       sx={{
@@ -24,7 +24,7 @@ function Sidebar({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '10px',
+        gap: '20px',
         px: '20px',
         borderRight: '1px solid lightgrey',
       }}
@@ -35,10 +35,43 @@ function Sidebar({
       <Button fullWidth variant='outlined' onClick={onThisWeek}>
         На неделю
       </Button>
-      <DateCalendar value={date} onChange={onDateChange} />
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <DatePicker
+          label='От'
+          format='DD.MM.YYYY'
+          onChange={(newValue: Date | null) => {
+            const newV = newValue ? new Date(`${newValue}`) : undefined;
+            onDateRange({
+              ...dateRange,
+              from: newV,
+            });
+          }}
+          slotProps={{
+            field: {
+              clearable: true,
+            },
+          }}
+        />
+        <DatePicker
+          label='До'
+          format='DD.MM.YYYY'
+          onChange={(newValue: IDate | null) => {
+            const newV = newValue ? new Date(`${newValue}`) : undefined;
+            onDateRange({
+              ...dateRange,
+              to: newV,
+            });
+          }}
+          slotProps={{
+            field: {
+              clearable: true,
+            },
+          }}
+        />
+      </Box>
       <FormControlLabel
         control={<Switch />}
-        checked={isShowUnfinished}
+        checked={areUnfinishedShown}
         onChange={onToggle}
         label='Только невыполненные'
       />
