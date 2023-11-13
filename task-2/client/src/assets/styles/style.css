@@ -3,6 +3,8 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  max-width: 640px;
+  padding: 0 15px;
 }
 
 .buttons-container {
@@ -72,4 +74,9 @@
 .name {
   text-transform: capitalize;
   font-weight: 500;
+}
+
+.student-id {
+  font-style: italic;
+  color: rgb(132, 224, 224);
 }
