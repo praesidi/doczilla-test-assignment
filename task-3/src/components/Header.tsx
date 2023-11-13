@@ -50,7 +50,7 @@ function Header({
             placeholder='Search…'
             onChange={(e) => {
               const searchQuery = e.target.value;
-              onSearch(searchQuery);
+              onSearch(`/find?q=${searchQuery}`);
             }}
             inputProps={{ 'aria-label': 'search' }}
           />
