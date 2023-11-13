@@ -1,4 +1,4 @@
-import { IStudent } from '../App';
+import { IStudent } from '../types';
 
 function StudentList({ students }: { students: IStudent[] }) {
   return (
@@ -6,7 +6,9 @@ function StudentList({ students }: { students: IStudent[] }) {
       {students.length === 0 ? (
         <h2>Список пуст</h2>
       ) : (
-        students.map((student) => <div>{student.firstName}</div>)
+        students.map((student, index) => (
+          <StudentCard key={student.id} student={student} index={index} />
+        ))
       )}
     </div>
   );
@@ -20,7 +22,8 @@ function StudentCard({ student, index }: { student: IStudent; index: number }) {
       <span className='name'>{student.lastName}</span>
       <span className='name'>{student.fatherName}</span>
       <span>{student.group}</span>
-      <span>{student.birthday}</span>
+      <span>{new Date(student.birthday).toLocaleDateString()}</span>
+      <span className='student-id'>{`student id: ${student.id}`}</span>
     </div>
   );
 }
