@@ -46,6 +46,7 @@ function buildDependencyList() {
 	});
 }
 
+// требует доработки
 function sortFiles() {
 	const sortedFileNames = Object.keys(fileNamesList).sort();
 	const resultArr = [...sortedFileNames];
@@ -58,8 +59,6 @@ function sortFiles() {
 				fileDependency[0][fileName]
 			);
 
-			console.log(index, indexOfDependency);
-
 			[resultArr[index], resultArr[indexOfDependency]] = [
 				resultArr[indexOfDependency],
 				resultArr[index],
@@ -70,7 +69,6 @@ function sortFiles() {
 			let lowestDependencyIndex = sortedFileNames.indexOf(
 				fileDependency[0][fileName]
 			);
-			console.log(lowestDependencyIndex);
 
 			fileDependency.forEach((item) => {
 				const currentDependencyIndex = sortedFileNames.indexOf(item[fileName]);
