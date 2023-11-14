@@ -54,7 +54,11 @@ function sortFiles() {
 		const fileDependency = dependencyList.filter((item) => item[fileName]);
 
 		if (fileDependency.length === 1) {
-			const indexOfDependency = resultArr.indexOf(fileDependency[0][fileName]);
+			const indexOfDependency = sortedFileNames.indexOf(
+				fileDependency[0][fileName]
+			);
+
+			console.log(index, indexOfDependency);
 
 			[resultArr[index], resultArr[indexOfDependency]] = [
 				resultArr[indexOfDependency],
@@ -63,13 +67,13 @@ function sortFiles() {
 		}
 
 		if (fileDependency.length > 1) {
-			let lowestDependencyIndex = resultArr.indexOf(
+			let lowestDependencyIndex = sortedFileNames.indexOf(
 				fileDependency[0][fileName]
 			);
 			console.log(lowestDependencyIndex);
 
 			fileDependency.forEach((item) => {
-				const currentDependencyIndex = resultArr.indexOf(item[fileName]);
+				const currentDependencyIndex = sortedFileNames.indexOf(item[fileName]);
 
 				if (lowestDependencyIndex < currentDependencyIndex) {
 					lowestDependencyIndex = currentDependencyIndex;
