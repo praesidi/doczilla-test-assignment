@@ -46,45 +46,20 @@ function buildDependencyList() {
 	});
 }
 
-// требует доработки
 function sortFiles() {
 	const sortedFileNames = Object.keys(fileNamesList).sort();
-	const resultArr = [...sortedFileNames];
 
-	sortedFileNames.forEach((fileName, index) => {
-		const fileDependency = dependencyList.filter((item) => item[fileName]);
+	dependencyList.forEach((dependency) => {
+		const fileIndex = sortedFileNames.indexOf(Object.keys(dependency)[0]);
+		const dependencyIndex = sortedFileNames.indexOf(
+			dependency[Object.keys(dependency)[0]]
+		);
 
-		if (fileDependency.length === 1) {
-			const indexOfDependency = sortedFileNames.indexOf(
-				fileDependency[0][fileName]
-			);
-
-			[resultArr[index], resultArr[indexOfDependency]] = [
-				resultArr[indexOfDependency],
-				resultArr[index],
-			];
-		}
-
-		if (fileDependency.length > 1) {
-			let lowestDependencyIndex = sortedFileNames.indexOf(
-				fileDependency[0][fileName]
-			);
-
-			fileDependency.forEach((item) => {
-				const currentDependencyIndex = sortedFileNames.indexOf(item[fileName]);
-
-				if (lowestDependencyIndex < currentDependencyIndex) {
-					lowestDependencyIndex = currentDependencyIndex;
-				}
-			});
-
-			[resultArr[index], resultArr[lowestDependencyIndex]] = [
-				resultArr[lowestDependencyIndex],
-				resultArr[index],
-			];
-		}
+		const removedElement = sortedFileNames.splice(fileIndex, 1)[0];
+		sortedFileNames.splice(dependencyIndex, 0, removedElement);
 	});
-	return resultArr;
+
+	return sortedFileNames;
 }
 
 function concatTextFiles(directoryPath, outputFileName) {
