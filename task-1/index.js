@@ -44,7 +44,6 @@ function buildDependencyList() {
 			});
 		}
 	});
-	// console.log("dependencyList: ", dependencyList);
 }
 
 function sortFiles() {
@@ -55,9 +54,7 @@ function sortFiles() {
 		const fileDependency = dependencyList.filter((item) => item[fileName]);
 
 		if (fileDependency.length === 1) {
-			const indexOfDependency = sortedFileNames.indexOf(
-				fileDependency[0][fileName]
-			);
+			const indexOfDependency = resultArr.indexOf(fileDependency[0][fileName]);
 
 			[resultArr[index], resultArr[indexOfDependency]] = [
 				resultArr[indexOfDependency],
@@ -66,18 +63,21 @@ function sortFiles() {
 		}
 
 		if (fileDependency.length > 1) {
-			let dependencyIndex = 0;
+			let lowestDependencyIndex = resultArr.indexOf(
+				fileDependency[0][fileName]
+			);
+			console.log(lowestDependencyIndex);
 
 			fileDependency.forEach((item) => {
-				const lowestDependencyIndex = sortedFileNames.indexOf(item[fileName]);
+				const currentDependencyIndex = resultArr.indexOf(item[fileName]);
 
-				if (dependencyIndex < lowestDependencyIndex) {
-					dependencyIndex = lowestDependencyIndex;
+				if (lowestDependencyIndex < currentDependencyIndex) {
+					lowestDependencyIndex = currentDependencyIndex;
 				}
 			});
 
-			[resultArr[index], resultArr[dependencyIndex]] = [
-				resultArr[dependencyIndex],
+			[resultArr[index], resultArr[lowestDependencyIndex]] = [
+				resultArr[lowestDependencyIndex],
 				resultArr[index],
 			];
 		}
@@ -90,6 +90,7 @@ function concatTextFiles(directoryPath, outputFileName) {
 	buildDependencyList();
 
 	const sortedFiles = sortFiles();
+	console.log(dependencyList, sortedFiles);
 	let concatenatedContent = "";
 
 	sortedFiles.forEach((fileName) => {
