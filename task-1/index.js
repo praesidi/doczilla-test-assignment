@@ -27,7 +27,9 @@ function findAllTextFileNames(directory) {
 const dependencyList = [];
 
 function buildDependencyList() {
-	Object.keys(fileNamesList).forEach((fileName, index) => {
+	const fileNames = Object.keys(fileNamesList);
+
+	fileNames.forEach((fileName, index) => {
 		const fileContent = fs.readFileSync(fileNamesList[fileName], "utf-8");
 		const matches = fileContent.match(/require `(.*?)`/g);
 		if (matches) {
@@ -36,6 +38,9 @@ function buildDependencyList() {
 				const isLinked = dependencyList.some(
 					(item) => item[dependency] === fileName
 				);
+				if (!fileNames.includes(dependency)) {
+					throw `Dependency file '${dependency}' doesn't exist`;
+				}
 				if (!isLinked) {
 					dependencyList.push({ [fileName]: dependency });
 				} else {
