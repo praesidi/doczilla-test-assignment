@@ -70,14 +70,17 @@ function sortFiles() {
 function concatTextFiles(directoryPath, outputFileName) {
 	findAllTextFileNames(directoryPath);
 	buildDependencyList();
-
 	const sortedFiles = sortFiles();
-	console.log(dependencyList, sortedFiles);
+
 	let concatenatedContent = "";
 
 	sortedFiles.forEach((fileName) => {
 		const fileContent = fs.readFileSync(fileNamesList[fileName], "utf8");
-		concatenatedContent += fileContent;
+		const stringToRemove = fileContent.match(/require `(.*?)`/g);
+
+		concatenatedContent += stringToRemove
+			? fileContent.replace(stringToRemove[0], "").trim() + "\n"
+			: fileContent.trim() + "\n";
 	});
 
 	const rootDirectory = path.dirname(fileURLToPath(import.meta.url));
